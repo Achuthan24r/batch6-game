@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Number Game</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: radial-gradient(circle at top, #ffecb3 0%, #f4f4f9 45%, #a3d5ff 100%);
+      color: #333;
+      overflow: hidden;
+    }
+    body::before {
+      content: '🎉';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 4rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    .game {
+      background: linear-gradient(135deg, #ffffffcc 0%, #ffe4e1cc 100%);
+      padding: 2rem;
+      border-radius: 24px;
+      border: 4px dashed #ff8c00;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      width: 360px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .game::after {
+      content: 'Guess or Groan!';
+      position: absolute;
+      top: -12px;
+      right: -60px;
+      transform: rotate(25deg);
+      background: #ff6f91;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-weight: bold;
+      box-shadow: 0 12px 24px rgba(255, 111, 145, 0.3);
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
+      text-shadow: 1px 1px 0 #fff, 2px 2px 0 rgba(255, 111, 145, 0.5);
+    }
+    p {
+      margin: 0.5rem 0 1rem;
+      color: #555;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 0.9rem;
+      margin: 0.75rem 0;
+      border: 3px solid #ffda77;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      outline: none;
+      transition: transform 0.2s ease;
+    }
+    input[type="number"]:focus {
+      transform: scale(1.02);
+      border-color: #ff6f91;
+      box-shadow: 0 0 12px rgba(255, 111, 145, 0.25);
+    }
+    button {
+      width: 100%;
+      padding: 0.95rem;
+      background: radial-gradient(circle, #ff6f91 0%, #ff8c00 100%);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(255, 111, 145, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(255, 111, 145, 0.35);
+    }
+    .result {
+      margin-top: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      min-height: 2.2rem;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>Guess the Number</h1>
+    <p>Enter a number from 1 to 10 and press Check.</p>
+    <input id="guessInput" type="number" min="1" max="10" placeholder="Your guess" />
+    <button onclick="checkGuess()">Check</button>
+    <div class="result" id="resultText">Score: 0</div>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function random() {
+      return Math.floor(Math.random() * 10) + 1;
+    }
+
+    function checkGuess() {
+      const guessInput = document.getElementById('guessInput');
+      const resultText = document.getElementById('resultText');
+      const guess = Number(guessInput.value);
+
+      if (!guess || guess < 1 || guess > 10) {
+        resultText.textContent = 'Please enter a number between 1 and 10.';
+        return;
+      }
+
+      const randomNumber = random();
+
+      if (guess === randomNumber) {
+        score += 1;
+        resultText.textContent = `Correct! The number was ${randomNumber}. Score: ${score}`;
+      } else {
+        score -= 1;
+        resultText.textContent = `Wrong. The number was ${randomNumber}. Score: ${score}`;
+      }
+
+      guessInput.value = '';
+    }
+  </script>
+</body>
+</html>
